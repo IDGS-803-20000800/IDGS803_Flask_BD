@@ -1,0 +1,37 @@
+{% macro render_input(name, placeholder, type="text") %}
+    <div class="control-group">
+        <label for="{{name}}" class="control-label">{{placeholder}}</label>
+        <div class="controls">
+            <input type="{{type}}" name="{{name}}" placeholder="{{placeholder}}" value="">
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro render_field(field) %}
+    <div class="control-group">
+        <div class="controls">
+            {{field.label}}
+            {{field(**kwargs)|safe}}
+        </div>
+    </div>
+    {% if field.errors %}
+        <ul>
+            {% for error in field %}
+                <li style="color: red;">{{error}}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endmacro %}
+
+{% macro render_boxes(numCajas) %}
+    {% for num in range(numCajas) %}
+        {{render_input("txtN{}".format(loop.index), "Número {}".format(loop.index), "number")}}
+
+    {% endfor %}
+    <div class="control-group">
+        <label for="txtTotalCajas" class="control-label">Total de cajas</label>
+        <div class="controls">
+            <input type="number" name="txtTotalCajas" value="{{numCajas}}" readonly="readonly">
+        </div>
+    </div>
+{% endmacro %}
